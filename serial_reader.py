@@ -19,7 +19,7 @@ except:
 label = input("Enter label (example: cafeteria, outside, closet): ")
 duration = int(input("How many seconds to record? "))
 
-# Open file
+# Open CSV file to output serial data to
 file = open(FILE, 'w', newline='')
 writer = csv.writer(file)
 
@@ -30,7 +30,7 @@ print("\nRecording...\n")
 
 start = time.time()
 
-# Main loop to read serial data and write to CSV
+# Main loop to read serial data at a regular interval and write to CSV
 while time.time() - start < duration:
     if ser.in_waiting:
         line = ser.readline().decode().strip()
@@ -47,7 +47,7 @@ while time.time() - start < duration:
                 print(temp, light, sound)
 
             except:
-                pass  # ignore bad data
+                pass  # ignore malformed data
 
 print("\nDone reading data. Saved to " + FILE + ". Make sure to copy this over to another file so it doesn't get overwritten next time you record data.")
 
